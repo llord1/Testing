@@ -1,0 +1,699 @@
+---
+title: "Stats, Functions, & Graphing"
+author: |
+  | Laurel Lord
+  | Harrisburg University
+date: "August 13, 2019"
+editor_options: 
+  chunk_output_type: console
+output: 
+  revealjs::revealjs_presentation:
+     theme: moon  #serif #simple #white #moon #black  #solarized #beige #default #blood #night #sky #league
+     center: true
+     self_contained: true
+     highlight: zenburn  # #espresso monochrome
+     transition: fade  #slide #concave #fade #default #zoom #convex #none 
+---
+
+```{r echo = FALSE, results=FALSE}
+setwd("D://PhD studies/Teaching-500/Week5") 
+```
+
+# Weekly Reminders
+
+## Weekly Reminders
+* **Recording of session 4 (a summary) will be uploaded tonight.**
+* **Lab 3 is due tonight** 
+* **Labs 4 and 5 will be uploaded tonight** 
+* **Final Project Proposal** review on **Saturday**; official submissions are due **Sunday August 18** at **11:55PM**
+
+
+
+# Quick Notes About Stats in `R` {data-background="./pictures/logo.jpg"}
+
+## {data-background="./pictures/logo.jpg"}
+
+* Previously looked at introductory statistics with `R`
+* Data structure and data types can determine which model to construct.
+* Once the data is understood better, it can be used to generate some stats.
+* Make sure to import that data and have a basic understanding before modeling
+
+```{r}
+library(datasets)
+data = iris
+str(data)
+```
+
+## References for Package and Functions to Generate Various Statistical Calculations {data-background="./pictures/logo.jpg"}
+
+* Vast list of useful stats functions in the [`stats` package](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/00Index.html)
+* Can subscribe to a [blog](https://awesome-r.com/) that provides updates on packages in R for many different tasks 
+
+## Writing inline equations in `RMarkdown` {data-background="./pictures/logo.jpg"}
+
+* Use `Latex` mathematical notation in sections delimited by `$ ... $` to show up inline, or by `$$` to express the equation   
+`$$ ... $$`  
+as a separate paragraph. 
+* Basic `Latex` commands:
+
+```{r echo = F, out.width = "30%", fig.align = 'left'}
+knitr::include_graphics("./pictures/1.png")
+```
+
+## Formatting with RMarkdown & Latex {data-background="./pictures/logo.jpg"}
+
+<div style="text-align: left;">
+
+To calculate the **mean** of the `r length(iris$Sepal.Length)` observations of the variables `r colnames(iris)` from the `iris` dataset, use the following equation:
+
+</div>
+
+$$\bar{x} = \frac {\sum_{i=1}^{n}x_{i}} {n}$$
+
+<div style="text-align: left;">
+
+* Use the following to format the above:
+
+</div>
+
+```{r echo = F, out.width = "75%", fig.align = 'left'}
+knitr::include_graphics("./pictures/writingequations.png")
+```
+
+## How to Write Greek Letters in Latex {data-background="./pictures/logo.jpg"}
+
+```{r echo = F, out.width = "25%", fig.align = 'left'}
+knitr::include_graphics("./pictures/3.png")
+```
+
+# Organizing the Data
+
+## `factor()` Function {data-background="./pictures/logo.jpg"}
+
+* Useful to transform data
+* Changes data into categorical data
+
+```{r message = F, warning = F}
+notfactor = rep(1:3, 50)
+table(notfactor)
+factored = factor(notfactor,
+                  levels=c(1,2,3),
+                  labels = c("swiss", "feta", "gouda"))
+table(factored)
+```
+
+## Reshaping the data with functions {data-background="./pictures/logo.jpg"}
+
+* In WIDE format, rows are participants and columns are variables.
+* In the LONG format, rows are the multiple measurements of the participants.
+* **`melt()`:** transforms data from WIDE to LONG format
+* **`cast()`:** transforms data from LONG to WIDE format
+
+
+## Example 1: Install the Data {data-background="./pictures/logo.jpg"}
+
+* Load & examine the Jiminy Cricket dataset
+
+```{r message = F, warning = F}
+library(readr)
+jimcrik = read.csv("./data/Jiminy Cricket.csv")
+summary(jimcrik)
+```
+
+## Example 1: Reshaping Data {data-background="./pictures/logo.jpg"}
+
+```{r message = F, warning = F}
+library(reshape)
+colnames(jimcrik)[1] = "ID" #rename first column
+##wide to long
+longcriket = melt(jimcrik, id.vars =c('ID', 'Strategy'), 
+                  measure.vars = c('Success_Pre', 'Success_Post'))
+summary(longcriket)
+```
+
+## Example 1: Data Formats {}
+WIDE format
+```{r message = F, warning = F}
+jimcrik[1:4,]
+```
+LONG format
+```{r message = F, warning = F}
+longcriket[1:4,]
+```
+
+
+# Graphing the Data {data-background="./pictures/logo.jpg"}
+
+## Graphing the Data {data-background="./pictures/logo.jpg"}
+
+```{r echo = F, out.width = "50%", fig.align = 'center'}
+knitr::include_graphics("./pictures/s&g.png")
+```
+
+## Graphs Available in `R` {data-background="./pictures/logo.jpg"}
+
+* Histograms
+* Boxplots
+* Error bar charts
+* Scatterplots
+* Line Graphs
+
+## The Art of Presenting Data {data-background="./pictures/logo.jpg"}
+
+* Accoring to Tufte (2011), graphs should:  
+  * Show the data.
+  * Induce the reader to think about the data being presented (rather than some other aspect of the graph).
+  * Avoid distorting the data.
+  * Present many numbers with minimum ink.
+  * Make large data sets (assuming you have one) coherent.
+  * Encourage the reader to compare different pieces of data.
+  * Reveal data.
+
+## Why is this graph a bad prepresentation of our data? {data-background="./pictures/logo.jpg"}
+
+```{r echo = F, out.width = "35%", fig.align = 'center'}
+knitr::include_graphics("./pictures/badgraph.png")
+```
+
+<div class="notes">
+
+1. 3D plots should not be used when plotting 2 variables becuase it obscures the data  
+2. Patterns: Bars have patterns which distract the viewer from the data and are unnecessary here  
+3. Cylindrical bars: Distracting eye from what is important  
+4. Badly labeled *y*-axis: "Number" describes what? Number of??? 
+
+</div>
+
+## Why is this graph better? {data-background="./pictures/logo.jpg"}
+
+```{r echo = F, out.width = "35%", fig.align = 'center'}
+knitr::include_graphics("./pictures/bettergraph.png")
+```
+
+<div class="notes">
+
+1. 2D plot: Removes the unnecessary third dimension  
+2. *y*-axis is better labeled so reader knows what is being measured  
+3. Distractions reduced: Removed extranous patterns, cylindrical bars, etc  
+4. Minimized ink: Removed axis lines and put them on the bars instead  
+</div>
+
+## How the scale can deceive! {data-background="./pictures/logo.jpg"}
+
+```{r echo = F, out.width = "100%", fig.align = 'center'}
+knitr::include_graphics("./pictures/deception.png")
+```
+
+## Using `ggplot2` package to graph in `R` {data-background="./pictures/logo.jpg"}
+
+* Most popular graphing package is `ggplot2`. Starts with calling a basic structure. Then, add options & layers to the graph. See pg 121-126 of text for reference of various options with `ggplot2` package.
+
+* Install `ggplot2` package and load the library.
+```{r message = F, warning = F}
+#install.packages('ggplot2')
+library(ggplot2)
+```
+
+# Histograms {data-background="./pictures/logo.jpg"}
+
+## Histograms {data-background="./pictures/logo.jpg"}
+
+* Graph plotting values of observations on the horizontal axis, and the frequency with which each value occurs in the data set on the vertical axis
+* Helps to identify the shape of the distribution
+    * Skew
+    * Kurtosis
+    * Spread
+    * Variation in scores
+    * Outliers
+
+
+## Rules for Histograms {data-background="./pictures/logo.jpg"}
+
+* All graphs should have: 
+  * *x*- and *y*- axis labels
+  * Labels for groups/legend
+  * Error bars when appropriate
+* Should be clear & uncluttered
+* Easy to read
+
+
+     
+## Example 2 {data-background="./pictures/logo.jpg"}
+
+* Use the previously loaded Jiminy cricket data (`jimcrik`) to build a histogram called `cricket_hist`.
+```{r out.width="50%", message = F, warning = F}
+cricket_hist = ggplot(jimcrik, aes(Success_Pre))
+cricket_hist
+```
+
+<div class="notes">
+
+Notice built object, but no layers so produces nothing on the axes
+
+</div>
+
+## Example 2 {data-background="./pictures/logo.jpg"}
+
+* Add a histogram to `cricket_hist` object
+```{r fig.height=4, fig.width=8, message = F, warning = F}
+cricket_hist + geom_histogram()
+```
+
+## Example 2 {data-background="./pictures/logo.jpg"}
+
+* Make the bins different
+```{r fig.height=4, fig.width=8, message = F, warning = F}
+cricket_hist + geom_histogram(binwidth = 0.4)
+```
+
+## Example 2 {data-background="./pictures/logo.jpg"}
+
+* Change the color
+```{r fig.height=4, fig.width=8, message = F, warning = F}
+cricket_hist + geom_histogram(binwidth = 0.4, color = 'red')
+```
+
+## Example 2 {data-background="./pictures/logo.jpg"}
+
+* Add the labels to the *x*- and *y*-axes.
+
+```{r fig.height=4, fig.width=8, message = F, warning = F}
+cricket_hist + geom_histogram(binwidth = 0.4, color = "red") + xlab("Success Pre Test") + 
+ylab("Frequency")
+```
+
+# Scatterplots {data-background="./pictures/logo.jpg"}
+
+## Scatterplots{data-background="./pictures/logo.jpg"}
+
+* A graph that plots values of one variable against the corresponding value of another variable. A third value can be represented with colors on the plot.
+
+* Simple scatterplot
+  * 2 continuous variables
+* Grouped scatter
+  * 2 continuous variables + 1 categorical variable.
+
+## Example 3 {data-background="./pictures/logo.jpg"}
+
+* Anxiety and exam performance.   
+* 103 student participants
+* Data collected:  
+    * Time spent revising (hours)
+    * Exam performance (%)
+    * Exam Anxiety (the EAQ, score out of 100)
+    * Gender
+
+## Example 3 {data-background="./pictures/logo.jpg"}
+
+* Load the exam dataset
+
+```{r message = F, warning = F}
+exam_anx = read_csv("./data/Exam Anxiety.csv")
+str(exam_anx)
+```
+
+## Example 3 {data-background="./pictures/logo.jpg"}
+
+* Change gender to a factor
+```{r message = F, warning = F}
+exam_anx$Gender2 = factor(exam_anx$Gender, levels = c(1,2),
+                     labels = c('Male', 'Female'))
+str(exam_anx$Gender2)
+```
+
+## Example 3: Simple Scatterplot {data-background="./pictures/logo.jpg"}
+
+```{r fig.height = 3.75, fig.width = 7.5, message = F, warning = F}
+library(ggplot2)
+scatter = ggplot(exam_anx, aes(Anxiety, Exam))
+
+scatter + geom_point()+
+  xlab('Anxiety Score')+
+  ylab('Exam Score')
+```
+
+## Example 3: Simple Scatterplot With Regression Line {data-background="./pictures/logo.jpg"}
+
+```{r fig.height = 4, fig.width = 8, message = F, warning = F}
+scatter + geom_point()+
+  geom_smooth(method = 'lm', color = 'black') +
+  xlab('Anxiety Score')+
+  ylab('Exam Score')
+```
+
+## Example 4: Grouped Scatterplot {data-background="./pictures/logo.jpg"}
+Code:  
+```{r fig.height = 3, fig.width = 6, message = F, warning = F, eval=FALSE}
+exam_scatter = ggplot(exam_anx, aes(Anxiety, Exam))
+exam_scatter + 
+  geom_point(aes(colour = exam_anx$Gender2))+
+  geom_smooth(method = 'lm', aes(fill = exam_anx$Gender2)) +
+  xlab('Anxiety Score')+
+  ylab('Exam Score')+
+  scale_fill_manual(name = 'Gender of Participant',
+                    labels = c('Men','Women'),
+                    values = c('red', 'purple'))+
+  scale_color_manual(name = 'Gender of Participant',
+                     labels = c('Men', 'Women'),
+                     values = c('red', 'purple'))
+```
+
+## Example 4: Grouped Scatterplot {data-background="./pictures/logo.jpg"}
+Graph:  
+```{r fig.height = 5, fig.width = 10, message = F, warning = F, echo=FALSE}
+exam_scatter = ggplot(exam_anx, aes(Anxiety, Exam))
+exam_scatter + 
+  geom_point(aes(colour = exam_anx$Gender2))+
+  geom_smooth(method = 'lm', aes(fill = exam_anx$Gender2)) +
+  xlab('Anxiety Score')+
+  ylab('Exam Score')+
+  scale_fill_manual(name = 'Gender of Participant',
+                    labels = c('Men','Women'),
+                    values = c('red', 'purple'))+
+  scale_color_manual(name = 'Gender of Participant',
+                     labels = c('Men', 'Women'),
+                     values = c('red', 'purple'))
+```
+
+
+## Another Scatterplot Library: `GGally` {data-background="./pictures/logo.jpg"}
+
+* `GGally`: package that has a plotting function that uses `ggplot2` as a back-end.
+* `ggpairs()`: Creates a scatterplot matrix for any numerical variables in a dataset; only deals with quantitative data types
+  * Make sure to convert any required data types before using `ggpairs()`
+  * Shows different types of graphs in a single plot
+* Install `GGally` package & load the library
+```{r}
+#install.packages('GGally')
+library(GGally)
+```
+
+## {data-background="./pictures/logo.jpg"}
+
+
+```{r fig.height = 4, fig.width = 8, message = F, warning = F}
+ggpairs(exam_anx, title = 'Exam Anxiety Study')
+```
+
+* Note the correlation analysis on the dataset.
+
+# Bar Charts {data-background="./pictures/logo.jpg"}
+
+## Bar Charts {data-background="./pictures/logo.jpg"}
+
+* **Bar Chart**: Graph in which a summary statistic (usually the mean) is plotted on the *y*-axis against a categorical variable on the *x*-axis. The bar shows the value of the mean for each category. Different-colored bars may be used to represent levels of a second categorical variable.
+
+## Error Bar Charts {data-background="./pictures/logo.jpg"}
+
+<font size="6">
+
+* Graphical representation of the mean of a set of observations that includes the 95% confidence interval of the mean. The mean is usually represented as a circle, square or rectangle at the value of the mean (or a bar extending to the value of the mean). The confidence interval is represented by a line protruding from the mean (upwards, downwards, or both) to a short horizontal line representing the limits of the confidence interval. Error bars can be drawn using the standard error or standard deviation instead of the 95% confidence interval.
+
+* Displays the precision of the mean in one of three ways: 
+  * The confidence interval (usually 95%)
+  * The standard deviation
+  * The standard error of the mean
+
+</font>
+
+## Example 5: Bar Charts for One Independent Variable {data-background="./pictures/logo.jpg"}
+
+* Is there such a thing as a 'chick flick'?
+  * Participants (20 men/20 women)
+  * Half of each sample saw one of two films
+    * A 'chick flick' (Bridget Jones's Diary)
+    * Control (Memento)
+* Outcome measure
+  * Physiological arousal as an indicator of how much they enjoyed the film.
+
+## Example 5 {data-background="./pictures/logo.jpg"}
+```{r message = F, warning = F}
+chickflick <- read.csv("./data/ChickFlick.csv")
+str(chickflick)
+colnames(chickflick)[1] = "gender"
+chickflick$gender = factor(chickflick$gender, 
+                      levels = c(1,2), 
+                      labels = c("Men", "Women"))
+chickflick$film = factor(chickflick$film,
+                    levels = c(1,2),
+                    labels = c("Bridget Jones", "Memento"))
+```
+
+## Example 5 {data-background="./pictures/logo.jpg"}
+
+* Create the object to plot the mean arousal score (*y*-axis) for each film (*x*-axis).
+```{r message = F, warning = F, eval=FALSE}
+chickflick_bar = ggplot(chickflick, aes(film, arousal))
+# Plot object
+chickflick_bar + 
+# Use the `stat_summary()` function to add the mean (displayed as bars) to the graph.  
+  stat_summary(fun.y = mean,
+               geom = "bar",
+               fill = "White", 
+               color = "Black")+
+# Add error bars as a layer using `stat_summary()` function
+  stat_summary(fun.data = mean_cl_normal, 
+               geom = "errorbar", 
+               position = position_dodge(width = 0.90), 
+               width = 0.2)+ 
+# Add labels
+  xlab('Movie Watched by Participant')+
+  ylab('Arousal Level')
+```
+
+## Example 5 {data-background="./pictures/logo.jpg"}
+
+```{r message = F, warning = F, echo=FALSE}
+chickflick_bar = ggplot(chickflick, aes(film, arousal))
+# Plot object
+chickflick_bar + 
+# Use the `stat_summary()` function to add the mean (displayed as bars) to the graph.  
+  stat_summary(fun.y = mean,
+               geom = "bar",
+               fill = "White", 
+               color = "Black")+
+# Add error bars as a layer using `stat_summary()` function
+  stat_summary(fun.data = mean_cl_normal, 
+               geom = "errorbar", 
+               position = position_dodge(width = 0.90), 
+               width = 0.2)+ 
+# Add labels
+  xlab('Movie Watched by Participant')+
+  ylab('Arousal Level')
+```
+
+
+
+## Example 6: Bar Chart of Two Independent Variables {data-background="./pictures/logo.jpg"}
+
+For color, replace `col = gender` with `fill = gender`
+
+```{r fig.height = 4, fig.width = 8, message = F, warning = F, eval=FALSE}
+chickflick_bar2 = ggplot(chickflick, aes(film, arousal, fill = gender))
+chickflick_bar2 +
+  stat_summary(fun.y = mean,
+               geom = "bar",
+               position = "dodge") +
+  stat_summary(fun.data = mean_cl_normal,
+               geom = "errorbar", 
+               position = position_dodge(width = 0.90),
+               width = .2) +
+  xlab("Film Watched") +
+  ylab("Arousal Level") + 
+  scale_fill_manual(name = "Gender of Participant", 
+                    labels = c("Boys", "Girls"),
+                    values = c("Gray30", "Gray"))
+```
+
+## Example 6: Bar Chart of Two Independent Variables {data-background="./pictures/logo.jpg"}
+
+
+```{r fig.height = 5, fig.width = 10, message = F, warning = F, echo=FALSE}
+chickflick_bar2 = ggplot(chickflick, aes(film, arousal, fill = gender))
+chickflick_bar2 +
+  stat_summary(fun.y = mean,
+               geom = "bar",
+               position = "dodge") +
+  stat_summary(fun.data = mean_cl_normal,
+               geom = "errorbar", 
+               position = position_dodge(width = 0.90),
+               width = .2) +
+  xlab("Film Watched") +
+  ylab("Arousal Level") + 
+  scale_fill_manual(name = "Gender of Participant", 
+                    labels = c("Boys", "Girls"),
+                    values = c("Gray30", "Gray"))
+```
+
+
+# Line Graphs {data-background="./pictures/logo.jpg"}
+
+## Line Graphs {data-background="./pictures/logo.jpg"}
+
+* Graph in which a summary statistic (usually the mean) is plotted on the *y*-axis against a categorical variable on the \   *x*-axis. The value of the mean for each category is shown by a symbol and means across categories are connected by a line. Different colored lines may be used to represent levels of a second categorical variable.
+
+* When to use a line graph
+  * With data that the *x* variable is categorical, but is considered "mildly continuous"
+  * Usually with repeated measures data over time.
+    
+## Example 7: Line Graph with One Independent Variable {data-background="./pictures/logo.jpg"}
+
+* How to cure hiccups?        
+  * 15 Participants 
+  * Each participant tries four interventions (in random order):  
+    * Baseline
+    * Tongue-pulling manoeuvres
+    * Massage of the carotid artery
+    * Other
+* Outcome measure: The number of hiccups in the minute after each procedure.
+
+## Example 7 {data-background="./pictures/logo.jpg"}
+<small>  
+Load the hiccups dataset
+```{r message = F, warning = F}
+hiccups = read_csv("./data/Hiccups.csv")
+str(hiccups)
+head(hiccups)
+```
+
+</small> 
+
+## Example 7 {data-background="./pictures/logo.jpg"}
+
+* Data is not in the correct format for graphing using `ggplot2()` package.
+* Need the scores stacked up in a single column and then another variable that specifies the type of intervention. Need to use `melt()` function.
+* `value` represents the scores. `variable` represents the types of intervention
+
+```{r message = F, warning = F}
+library(reshape2)
+hiccups_transformed = melt(hiccups, measured = c("Baseline", "Tongue", "Carotid", "Other"))
+str(hiccups_transformed)
+```
+
+## Example 7 {data-background="./pictures/logo.jpg"}
+
+* `aes()` defined as *x*-axis variable (categorical), *y*-axis variable (continuous)
+
+```{r fig.height = 4, fig.width = 8, message = F, warning = F, eval=FALSE}
+colnames(hiccups_transformed) = c("Intervention", "Hiccups")
+hiccups_line = ggplot(hiccups_transformed, aes(Intervention, Hiccups))
+hiccups_line +
+  stat_summary(fun.y = mean, ##adds the points
+               geom = "point") +
+  stat_summary(fun.y = mean, ##adds the line
+               geom = "line",
+               aes(group=1)) +
+  stat_summary(fun.data = mean_cl_normal, ##adds the error bars
+               geom = "errorbar", 
+               width = .2) +
+  xlab("Intervention Type") +
+  ylab("Number of Hiccups")
+```
+
+## Example 7 {data-background="./pictures/logo.jpg"}
+
+```{r fig.height = 5, fig.width = 10, message = F, warning = F, echo=FALSE}
+colnames(hiccups_transformed) = c("Intervention", "Hiccups")
+hiccups_line = ggplot(hiccups_transformed, aes(Intervention, Hiccups))
+hiccups_line +
+  stat_summary(fun.y = mean, ##adds the points
+               geom = "point") +
+  stat_summary(fun.y = mean, ##adds the line
+               geom = "line",
+               aes(group=1)) +
+  stat_summary(fun.data = mean_cl_normal, ##adds the error bars
+               geom = "errorbar", 
+               width = .2) +
+  xlab("Intervention Type") +
+  ylab("Number of Hiccups")
+```
+
+
+## Example 8: Line Graph of Several Independent Variables {data-background="./pictures/logo.jpg"}
+
+* Is text-messaging bad for your grammar?
+  * 50 Participants (kids)
+  * Participants split into two groups
+    * Text-messaging allowed
+    * Text-messaging forbidden
+  * Each child evaluated at two points in time: 
+    * Baseline
+    * 6 months later
+* Outcome measure: Percentage score on a grammar test
+
+## Example 8 {data-background="./pictures/logo.jpg"}
+
+Load the Texting dataset
+    
+```{r message = F, warning = F}
+library(readxl)
+texting <- read_excel("./data/Texting.xlsx")
+str(texting)
+head(texting)
+```
+
+## Example 8 {data-background="./pictures/logo.jpg"}
+
+```{r fig.height = 4, fig.width = 8, message = F, warning = F}
+texting$Group = factor(texting$Group,
+                       levels = c(1,2),
+                       labels = c("Texting Allowed", "No Texting Allowed"))
+texting_transformed = melt(texting,
+                   id = c("Group"),
+                   measured = c("Baseline", "Six_months"))
+colnames(texting_transformed) = c("Group", "Time", "Grammar_Score")
+```
+
+## Example 8 {data-background="./pictures/logo.jpg"}
+
+* `aes()` specifies the *x*-axis (categorical), *y*-axis (continuous), & color legend (categorical)
+
+```{r message = F, warning = F, eval=FALSE}
+texting_line = ggplot(texting_transformed, aes(Time, Grammar_Score, color = Group))
+
+texting_line +
+  stat_summary(fun.y = mean,
+               geom = "point") +
+  stat_summary(fun.y = mean,
+               geom = "line", 
+               aes(group = Group)) +
+  stat_summary(fun.data = mean_cl_normal,
+               geom = "errorbar",
+               width = .2) + 
+  xlab("Measurement Time") +
+  ylab("Mean Grammar Score") +
+  scale_color_manual(name = "Texting Option",
+                     labels = c("Texting Allowed", "No Texting Allowed"),
+                     values = c("Black", "Grey")) +
+  scale_x_discrete(labels = c("Baseline", "Six Months"))
+```
+
+## Example 8 {data-background="./pictures/logo.jpg"}
+
+```{r fig.height = 5, fig.width = 10, message = F, warning = F, echo=FALSE}
+texting_line = ggplot(texting_transformed, aes(Time, Grammar_Score, color = Group))
+
+texting_line +
+  stat_summary(fun.y = mean,
+               geom = "point") +
+  stat_summary(fun.y = mean,
+               geom = "line", 
+               aes(group = Group)) +
+  stat_summary(fun.data = mean_cl_normal,
+               geom = "errorbar",
+               width = .2) + 
+  xlab("Measurement Time") +
+  ylab("Mean Grammar Score") +
+  scale_color_manual(name = "Texting Option",
+                     labels = c("Texting Allowed", "No Texting Allowed"),
+                     values = c("Black", "Grey")) +
+  scale_x_discrete(labels = c("Baseline", "Six Months"))
+```
+
+# Questions?
+
+## Reminders##
+* **Recording of session 4 (a summary) will be uploaded tonight.**
+* **Lab 3 is due tonight** 
+* **Labs 4 and 5 will be uploaded tonight** 
+* **Final Project Proposal** review on **Saturday**; official submissions are due **Sunday August 18** at **11:55PM**
