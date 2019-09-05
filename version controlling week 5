@@ -8,15 +8,20 @@ editor_options:
   chunk_output_type: console
 output: 
   revealjs::revealjs_presentation:
-     theme: moon  #serif #simple #white #moon #black  #solarized #beige #default #blood #night #sky #league
+     theme: sky  #serif #simple #white #moon #black  #solarized #beige #default #blood #night #sky #league
      center: true
      self_contained: true
      highlight: zenburn  # #espresso monochrome
-     transition: fade  #slide #concave #fade #default #zoom #convex #none 
+     transition: slide  #slide #concave #fade #default #zoom #convex #none 
+     reveal_options:
+     slideNumber: true
 ---
 
 ```{r echo = FALSE, results=FALSE}
 setwd("D://PhD studies/Teaching-500/Week5") 
+#Web resources mentioned in textbook:
+#https://junkcharts.typepad.com/
+#http://had.co.nz/ggplot2/
 ```
 
 # Weekly Reminders
@@ -160,7 +165,7 @@ knitr::include_graphics("./pictures/s&g.png")
 
 ## The Art of Presenting Data {data-background="./pictures/logo.jpg"}
 
-* Accoring to Tufte (2011), graphs should:  
+* According to Tufte (2011), graphs should:  
   * Show the data.
   * Induce the reader to think about the data being presented (rather than some other aspect of the graph).
   * Avoid distorting the data.
@@ -177,7 +182,7 @@ knitr::include_graphics("./pictures/badgraph.png")
 
 <div class="notes">
 
-1. 3D plots should not be used when plotting 2 variables becuase it obscures the data  
+1. 3D plots should not be used when plotting 2 variables because it obscures the data  
 2. Patterns: Bars have patterns which distract the viewer from the data and are unnecessary here  
 3. Cylindrical bars: Distracting eye from what is important  
 4. Badly labeled *y*-axis: "Number" describes what? Number of??? 
@@ -193,8 +198,8 @@ knitr::include_graphics("./pictures/bettergraph.png")
 <div class="notes">
 
 1. 2D plot: Removes the unnecessary third dimension  
-2. *y*-axis is better labeled so reader knows what is being measured  
-3. Distractions reduced: Removed extranous patterns, cylindrical bars, etc  
+2. *y*-axis is better labeled so the reader knows what is being measured  
+3. Distractions reduced: Removed extraneous patterns, cylindrical bars, etc  
 4. Minimized ink: Removed axis lines and put them on the bars instead  
 </div>
 
@@ -206,7 +211,7 @@ knitr::include_graphics("./pictures/deception.png")
 
 ## Using `ggplot2` package to graph in `R` {data-background="./pictures/logo.jpg"}
 
-* Most popular graphing package is `ggplot2`. Starts with calling a basic structure. Then, add options & layers to the graph. See pg 121-126 of text for reference of various options with `ggplot2` package.
+* Most popular graphing package is `ggplot2`. Starts with calling a basic structure. Then, add options & layers to the graph. See pg 121-126 of text for reference to various options with `ggplot2` package.
 
 * Install `ggplot2` package and load the library.
 ```{r message = F, warning = F}
@@ -248,7 +253,7 @@ cricket_hist
 
 <div class="notes">
 
-Notice built object, but no layers so produces nothing on the axes
+Notice it built an object, but no layers; so produces nothing on the axes
 
 </div>
 
@@ -378,7 +383,7 @@ exam_scatter +
 
 ## Another Scatterplot Library: `GGally` {data-background="./pictures/logo.jpg"}
 
-* `GGally`: package that has a plotting function that uses `ggplot2` as a back-end.
+* `GGally`: a package that has a plotting function that uses `ggplot2` as a back-end.
 * `ggpairs()`: Creates a scatterplot matrix for any numerical variables in a dataset; only deals with quantitative data types
   * Make sure to convert any required data types before using `ggpairs()`
   * Shows different types of graphs in a single plot
@@ -542,7 +547,7 @@ chickflick_bar2 +
   * 15 Participants 
   * Each participant tries four interventions (in random order):  
     * Baseline
-    * Tongue-pulling manoeuvres
+    * Tongue-pulling maneuvers
     * Massage of the carotid artery
     * Other
 * Outcome measure: The number of hiccups in the minute after each procedure.
