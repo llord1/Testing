@@ -1,53 +1,38 @@
 Introduction to Data Analytics 1
 Ze Wang
-2019-07-30
+07/30/2019
 Part 1: Variables, Hypothesis, Designs
 Title: Offshore outsourcing: Its advantages, disadvantages, and effect on the American economy
 Abstract: The United States has trained some of the world’s best computer programmers and technology experts. Despite all of this training, many businesses do not have a full understanding of information technology. As the importance of technology in the business world grows, many companies are wasting money on extensive technology projects. When problems arise, they expect that further investment will solve these issues. To prevent such problems, many companies have begun to outsource these functions in an effort to reduce costs and improve performance. The majority of these outsourced information technology and call center jobs are going to low-wage countries, such as India and China where English-speaking college graduates are being hired at substantially lower wages. The purpose of this study is to evaluate the positive and negative aspects of offshore outsourcing with a focus on the outsourcing markets in India and China, arguably the two most popular destinations for outsourcers. The cost savings associated with offshore outsourcing will be evaluated in relation to the security risks and other weakness of offshore outsourcing. In addition, an analysis of the number of jobs sent overseas versus the number of jobs created in the United States will be used to assess the effects that outsourcing is having on the American economy and job market. Finally, the value of jobs lost from the American economy will be compared to the value of jobs created. The goal of these analyses is to create a clear picture of this increasingly popular business strategy.
 Answer the following questions about the abstract above:
 1)	What is a potential hypothesis of the researchers?
-
 One of the potential hypotheses could be that the outsourcing strategy adopted by many American companies lead to higher unemployment rate in the information technology industry in the US.
-
 2)	What is one of the independent variables?
-
 One of the independent variables could be the numbers of jobs in information technology industry being sent overseas from the US every year.
-a.	What type of variable is the independent variable?
-It is a discrete variable.
+a.  What type of variable is the independent variable?
 
+It is a discrete variable.
 3)	What is one of the dependent variables?
 One of the dependent variables could be the unemployment rate of informational technology industry in the US
-a.	What type of variable is the dependent variable?
+a.  What type of variable is the dependent variable?
+
 It is a discrete variable.
-
 4)	What might cause some measurement error in this experiment?
-
-Measurement error might come from the unclear definition of the information technology industry. Sometimes it is hard to precisely determine which company is in information technology field and which is not, especially when the company apply information technology as one of their means to achieve goals in other industry such as healthcare. 
-
+Measurement error might come from the unclear definition of the information technology industry. Sometimes it is hard to precisely determine which company is in information technology field and which is not, especially when the company apply information technology as one of their means to achieve goals in other industry such as healthcare.
 Also, it is hard to get a very accurate number when measuring the unemployment rate. As we know, lots of people are freelancer programmers in the information technology industry and their employment status will also be hard to define, thus affecting the real number of the unemployment rate.
-
 5)	What type of research design is the experiment?
-
 It will be correlational research design
-a.	Why?
- Correlational research is a non-experimental research design which helps researchers to establish a relationship between two closely connected variables.
+a.  Why?
 
+Correlational research is a non-experimental research design which helps researchers to establish a relationship between two closely connected variables.
 6)	How might you measure the reliability of your dependent variable?
-
 One of the methods would be using test-retest method, which can estimate a measurements consistency by evaluate the result after repeat the test
-
 7)	Is this study ecologically valid?
-
 Yes. It is ecologically valid because all the data are from real world and the result can be applied to real-word settings.
-
 8)	Can this study claim cause and effect?
-
 a.	Why/why not?
-
-No. This study can be claimed cause and effect only when we can identify the close relationship between the two variables, the time-order of the two variables and also rule out other possibilities. 
-
+ 	No. This study can be claimed cause and effect only when we can identify the close relationship between the two variables, the time-order of the two variables and also rule out other possibilities.
 9)	What type of data collection did the researchers use (please note that #5 is a different question)?
-
 It is administrative data.
 Part 2: Use the assessment scores dataset (03_lab.csv) to answer these questions.
 The provided dataset includes the following information created to match the abstract:
@@ -58,82 +43,309 @@ The provided dataset includes the following information created to match the abs
 •	Where: where the jobs were outsourced to.
 Calculate the following information:
 1)	Create a frequency table of the percent of outsourced jobs.
+jobsdata <- read.csv("jobsdata.csv")
+table(jobsdata$jobs)
+## 
+## 59.43  61.7 63.36 69.06 69.28 69.35 69.62 69.81 70.43 70.73 70.75  71.1 
+##     1     1     1     1     1     1     1     1     1     1     1     1 
+##  71.2 71.93 72.85 72.94 73.46 73.66 74.55 74.72 74.82 75.09 75.37 75.67 
+##     1     1     1     1     1     1     1     1     1     1     1     1 
+## 76.64 76.68 76.84 77.22 77.51 77.74 77.91 77.93 78.16 78.23 78.27 78.38 
+##     1     1     2     1     1     1     1     1     1     1     1     2 
+## 78.43 78.47 78.49 78.52 78.66  78.7 79.03 79.23 79.52  79.8 80.05 80.11 
+##     1     1     1     1     1     1     1     1     1     1     1     1 
+## 80.35 80.46 80.47 80.64 80.68 81.08 81.25 81.29 81.45 81.59 81.65  81.7 
+##     1     1     1     1     1     1     1     1     1     1     1     1 
+## 81.76 81.95 84.83 84.91 84.98 85.09 85.22 85.51 85.61 86.09 86.42 86.44 
+##     1     1     1     1     1     1     1     1     1     1     1     1 
+## 86.55 86.67 86.99 87.94 88.01 88.65 88.66 88.87 89.25 89.36 89.59 89.96 
+##     1     1     1     1     1     1     1     1     1     1     1     1 
+## 91.11 91.35 91.52 91.79 91.98 92.16 92.48 92.55 93.22 93.29 96.88 97.11 
+##     1     1     1     1     2     1     1     1     1     1     1     1 
+##   100 
+##     1
 2)	Create histograms of the two types of cost savings. You will want to add the breaks argument to the hist() function. This argument adds more bars to the histogram, which makes it easier to answer the following questions:
 hist(dataset$column, breaks = 15)
 15 is a great number to pick, but it can be any number. For this assignment, try 15 to see a medium number of bars.
-Below is the code I used to make the table and histogram:
-> table(jobsdata$jobs)
-> hist(jobsdata$cost, main = "cost savings 1", xlab = "cost savings", breaks = 15)
-> hist(jobsdata$cost2, main = "cost savings 2", xlab = "cost savings", breaks = 15)
-
+hist(jobsdata$cost, main = "cost savings 1", xlab = "cost savings", breaks = 15)
+ 
+hist(jobsdata$cost2, main = "cost savings 2", xlab = "cost savings", breaks = 15)
+ 
 3)	Examine these histograms to answer the following questions:
 a.	Which cost savings appears the most normal?
-Based on the histogram above, histogram of cost saving 2 apparently seems to be most normal. 
+ 	Based on the histogram above, histogram of cost saving 1 apparently is multimodal.
 b.	Which cost savings data is multimodal?
-        Based on the histogram above, histogram of cost saving 1 apparently is multimodal. 
-
+ 	Based on the histogram above, histogram of cost saving 1 is skewed to the left.
 c.	Which cost savings data looks the most skewed (and in which direction positive or negative)?
-         Based on the histogram above, histogram of cost saving 1 is skewed to the left. 
-
+ 	Based on the histogram above, histogram of cost saving 2 is more kurtotic.
 d.	Which cost savings data looks the most kurtotic?
-         Based on the histogram above, histogram of cost saving 2 is more kurtotic. 
-
+ 	Based on the histogram above, histogram of cost saving 2 is more kurtotic.
 4)	Calculate the z-scores for each cost savings, so they are all on the same scale.
+scale(jobsdata$cost)
+##               [,1]
+##   [1,]  0.66077470
+##   [2,]  0.01083237
+##   [3,] -0.53078624
+##   [4,]  1.31071703
+##   [5,]  1.52736448
+##   [6,] -0.42246251
+##   [7,]  0.44412726
+##   [8,]  0.44412726
+##   [9,] -0.74743368
+##  [10,] -0.74743368
+##  [11,] -0.63910996
+##  [12,] -0.20581507
+##  [13,]  1.09406959
+##  [14,]  1.31071703
+##  [15,]  0.98574587
+##  [16,]  0.22747982
+##  [17,] -0.53078624
+##  [18,] -0.53078624
+##  [19,] -0.53078624
+##  [20,] -1.18072857
+##  [21,]  0.76909842
+##  [22,] -0.09749135
+##  [23,]  0.55245098
+##  [24,]  1.41904075
+##  [25,] -0.85575740
+##  [26,]  1.09406959
+##  [27,] -0.53078624
+##  [28,]  0.33580354
+##  [29,] -1.61402345
+##  [30,]  0.22747982
+##  [31,] -1.18072857
+##  [32,]  0.55245098
+##  [33,] -2.48061323
+##  [34,]  1.09406959
+##  [35,]  1.09406959
+##  [36,]  1.41904075
+##  [37,] -2.04731834
+##  [38,]  0.33580354
+##  [39,] -0.74743368
+##  [40,]  1.52736448
+##  [41,]  0.87742215
+##  [42,]  0.22747982
+##  [43,] -0.42246251
+##  [44,]  1.20239331
+##  [45,] -1.50569973
+##  [46,] -0.63910996
+##  [47,] -1.50569973
+##  [48,] -0.63910996
+##  [49,]  0.33580354
+##  [50,]  1.85233564
+##  [51,]  1.31071703
+##  [52,]  0.11915609
+##  [53,]  1.41904075
+##  [54,]  0.87742215
+##  [55,]  0.01083237
+##  [56,]  0.11915609
+##  [57,]  0.87742215
+##  [58,] -1.28905229
+##  [59,]  0.11915609
+##  [60,]  0.87742215
+##  [61,] -1.18072857
+##  [62,]  1.31071703
+##  [63,] -0.74743368
+##  [64,]  0.33580354
+##  [65,] -1.61402345
+##  [66,]  0.44412726
+##  [67,] -2.58893695
+##  [68,] -1.61402345
+##  [69,]  0.87742215
+##  [70,]  0.22747982
+##  [71,] -0.20581507
+##  [72,]  0.55245098
+##  [73,]  0.11915609
+##  [74,] -0.74743368
+##  [75,] -0.09749135
+##  [76,] -0.20581507
+##  [77,]  1.74401192
+##  [78,]  1.31071703
+##  [79,] -1.28905229
+##  [80,] -2.04731834
+##  [81,] -0.74743368
+##  [82,]  0.98574587
+##  [83,]  1.31071703
+##  [84,]  0.22747982
+##  [85,]  0.11915609
+##  [86,] -0.96408112
+##  [87,]  0.55245098
+##  [88,] -0.31413879
+##  [89,] -1.28905229
+##  [90,]  0.11915609
+##  [91,]  0.11915609
+##  [92,]  0.44412726
+##  [93,]  0.44412726
+##  [94,] -0.63910996
+##  [95,]  0.87742215
+##  [96,] -0.09749135
+##  [97,] -0.20581507
+##  [98,] -0.09749135
+##  [99,] -1.50569973
+## [100,] -0.96408112
+## attr(,"scaled:center")
+## [1] 548.9
+## attr(,"scaled:scale")
+## [1] 9.231588
+scale(jobsdata$cost2)
+##               [,1]
+##   [1,]  1.65290771
+##   [2,]  0.41893406
+##   [3,]  0.60403010
+##   [4,]  0.72742747
+##   [5,] -2.35750667
+##   [6,]  1.28271561
+##   [7,]  0.91252352
+##   [8,] -0.19805277
+##   [9,]  0.72742747
+##  [10,]  0.11044064
+##  [11,] -1.74051984
+##  [12,] -0.19805277
+##  [13,] -1.80221852
+##  [14,]  1.46781166
+##  [15,]  0.78912615
+##  [16,]  0.11044064
+##  [17,] -0.32145014
+##  [18,]  1.40611298
+##  [19,]  0.11044064
+##  [20,]  3.01027873
+##  [21,] -0.38314882
+##  [22,] -1.30862906
+##  [23,]  0.04874196
+##  [24,] -0.19805277
+##  [25,] -1.06183433
+##  [26,]  0.48063274
+##  [27,]  0.54233142
+##  [28,] -0.81503960
+##  [29,] -1.55542379
+##  [30,]  0.23383801
+##  [31,]  0.04874196
+##  [32,] -0.13635409
+##  [33,] -0.75334092
+##  [34,]  0.78912615
+##  [35,]  1.40611298
+##  [36,]  0.35723537
+##  [37,] -0.44484750
+##  [38,]  0.04874196
+##  [39,] -1.61712247
+##  [40,] -1.24693038
+##  [41,] -0.25975145
+##  [42,] -0.13635409
+##  [43,] -1.74051984
+##  [44,]  0.72742747
+##  [45,]  0.11044064
+##  [46,]  0.85082483
+##  [47,]  0.35723537
+##  [48,] -1.30862906
+##  [49,] -0.25975145
+##  [50,] -0.19805277
+##  [51,]  0.48063274
+##  [52,]  0.23383801
+##  [53,] -1.00013565
+##  [54,] -1.12353301
+##  [55,]  0.91252352
+##  [56,]  0.41893406
+##  [57,] -2.04901325
+##  [58,]  0.35723537
+##  [59,]  0.91252352
+##  [60,] -0.07465541
+##  [61,] -1.12353301
+##  [62,] -0.56824487
+##  [63,]  0.04874196
+##  [64,] -1.24693038
+##  [65,]  0.04874196
+##  [66,]  0.91252352
+##  [67,] -0.13635409
+##  [68,] -1.12353301
+##  [69,] -0.44484750
+##  [70,]  0.35723537
+##  [71,]  0.97422220
+##  [72,]  1.15931825
+##  [73,]  2.39329190
+##  [74,] -0.69164223
+##  [75,] -0.75334092
+##  [76,]  1.89970244
+##  [77,] -0.38314882
+##  [78,] -0.56824487
+##  [79,]  0.35723537
+##  [80,]  0.85082483
+##  [81,]  0.04874196
+##  [82,]  0.97422220
+##  [83,] -0.19805277
+##  [84,] -0.44484750
+##  [85,]  0.29553669
+##  [86,] -1.74051984
+##  [87,] -0.87673828
+##  [88,] -0.69164223
+##  [89,]  1.09761957
+##  [90,] -0.69164223
+##  [91,] -0.32145014
+##  [92,] -1.98731457
+##  [93,]  0.29553669
+##  [94,]  1.65290771
+##  [95,] -0.56824487
+##  [96,]  0.41893406
+##  [97,] -0.01295672
+##  [98,]  1.22101693
+##  [99,]  0.11044064
+## [100,]  1.09761957
+## attr(,"scaled:center")
+## [1] 691.21
+## attr(,"scaled:scale")
+## [1] 16.2078
+6)	How many of the cost saving scores were more extreme than 95% of the data (i.e., number of z-scores at a p < .05)?
+library(dplyr)
+## 
+## Attaching package: 'dplyr'
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+jobsdata <- jobsdata %>% 
+ mutate(z_score = (cost - mean(cost)) / sd(cost))
+jobsdata <- jobsdata %>% 
+ mutate(z_score2 = (cost2 - mean(cost2)) / sd(cost2))
+filter(jobsdata, z_score > 1.645)
+##    jobs cost cost2 business where  z_score   z_score2
+## 1 80.46  566   688       50 India 1.852336 -0.1980528
+## 2 79.23  565   685       77 China 1.744012 -0.3831488
+filter(jobsdata, z_score2 > 1.645)
+##    jobs cost cost2 business where    z_score z_score2
+## 1 75.09  555   718        1 China  0.6607747 1.652908
+## 2 86.99  538   740       20 India -1.1807286 3.010279
+## 3 78.38  550   730       73 China  0.1191561 2.393292
+## 4 79.52  547   722       76 China -0.2058151 1.899702
+## 5 81.70  543   718       94 China -0.6391100 1.652908
+a.  Cost Savings 1: 2 scores are more extreme than 95% of the data
 
-       I used following code to calculated the z-score for each cost savings.
-> scale(jobsdata$cost)
-> scale(jobsdata$cost2)
+c.  Cost Savings 2: 5 scores are more extreme than 95% of the data
+7)	Which business had:
+which.max(jobsdata$cost)
+## [1] 50
+which.max(jobsdata$cost2)
+## [1] 20
+which.min(jobsdata$cost)
+## [1] 67
+which.min(jobsdata$cost2)
+## [1] 5
+a.  the highest cost savings?
 
-5)	How many of the cost saving scores were more extreme than 95% of the data (i.e., number of z-scores at a p < .05)?
-
-        Following is the data I used to get the number cost savings z-scores that are more extreme  
-        than 95% of the data
-> jobsdata <- jobsdata %>% 
-+  mutate(z_score = (cost - mean(cost)) / sd(cost))
-> View(jobsdata)
-> jobsdata <- jobsdata %>% 
-+  mutate(z_score2 = (cost2 - mean(cost2)) / sd(cost2))
-> View(jobsdata)
-> filter(jobsdata, z_score > 1.645)
-# A tibble: 2 x 7
-   jobs  cost cost2 business where z_score z_score2
-  <dbl> <dbl> <dbl>    <dbl> <chr>   <dbl>    <dbl>
-1  80.5   566   688       50 India    1.85   -0.198
-2  79.2   565   685       77 China    1.74   -0.383
-> filter(jobsdata, z_score2 > 1.645)
-# A tibble: 5 x 7
-   jobs  cost cost2 business where z_score z_score2
-  <dbl> <dbl> <dbl>    <dbl> <chr>   <dbl>    <dbl>
-1  75.1   555   718        1 China   0.661     1.65
-2  87.0   538   740       20 India  -1.18      3.01
-3  78.4   550   730       73 China   0.119     2.39
-4  79.5   547   722       76 China  -0.206     1.90
-5  81.7   543   718       94 China  -0.639     1.65
-
-a.	Cost Savings 1:  2 scores are more extreme than 95% of the data
-b.	Cost Savings 2:  5 scores are more extreme than 95% of the data
-
-6)	Which business had:
-Following is the code I applied to fing the ID number of the business with highest cost saving, lowest cost saving.
->which.max(jobsdata$cost)
->which.max(jobsdata$cost2)
-> which.min(jobsdata$cost)
-> which.min(jobsdata$cost2)
-
-a.	the highest cost savings?
 No. 50 business has the highest cost 1 saving.
 No. 20 business has the highest cost 2 saving.
 
-b.	the the lowest cost savings?
+
+b.  the the lowest cost savings?
+
 No. 67 business has the lowest cost 1 saving.
 No. 5   business has the lowest cost 2 saving.
 
-c.	Use both cost savings columns and find the ID number of the business with the lowest and highest z-score.
+
+c.  Use both cost savings columns and find the ID number of the business with the lowest and highest z-score.
+
 The result is the same from the previous 2 questions.
 No. 50 business has the highest cost 1 z-score
 No. 20 business has the highest cost 2 z-score
 No. 67 business has the lowest cost 1 z-score 
 No. 5   business has the lowest cost 2 z-score
-
-
-
